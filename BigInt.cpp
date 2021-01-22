@@ -4,6 +4,7 @@
 #include <cmath>
 using namespace std;
 
+//convertisseur d'un nombre décimal en binaire
 void numberConverter(vector<unsigned int>& result, unsigned int number, unsigned int taille)
 {
 
@@ -26,6 +27,7 @@ void numberConverter(vector<unsigned int>& result, unsigned int number, unsigned
 
 }
 
+//convertisseur d'un nombre binaire en nombre décimal
 unsigned int BitConverter(vector<unsigned int>& number)
 {
 	unsigned int sum = 0;
@@ -36,6 +38,7 @@ unsigned int BitConverter(vector<unsigned int>& number)
 	return sum;
 }
 
+//opération intermédiaire pour la multiplication des paquets
 void decalageBit(vector<unsigned int>& result, vector<unsigned int>& number, unsigned int nbDecalage)
 {
 	for (unsigned int i = 0; i < nbDecalage; i++)
@@ -45,6 +48,7 @@ void decalageBit(vector<unsigned int>& result, vector<unsigned int>& number, uns
 		result.push_back(number[i]);
 }
 
+//addition des paquets
 unsigned int Addition(vector<unsigned int>& result, vector<unsigned int>& A, vector<unsigned int>& B, unsigned int c)
 {
 
@@ -88,7 +92,7 @@ unsigned int Addition(vector<unsigned int>& result, vector<unsigned int>& A, vec
 
 }
 
-
+//multiplication des paquets
 unsigned int Multiplication(vector<unsigned int>& result, vector<unsigned int>& A, vector<unsigned int>& B, vector<unsigned int>& carry, unsigned int taille)
 {
 	unsigned int k = 0;
@@ -149,7 +153,7 @@ unsigned int Multiplication(vector<unsigned int>& result, vector<unsigned int>& 
 	return k;
 }
 
-
+//addition grand nombre 
 void addition(vector<vector<unsigned int> >& result, vector<vector<unsigned int> >& A, vector<vector<unsigned int> >& B)
 {
 	unsigned int carry = 0;
@@ -176,6 +180,7 @@ void addition(vector<vector<unsigned int> >& result, vector<vector<unsigned int>
 
 }
 
+//soustraction grand nombre
 void soustraction(vector<vector<unsigned int> >& result, vector<vector<unsigned int> >& A, vector<vector<unsigned int> >& B)
 {
 	if(A.size() > B.size())
@@ -235,6 +240,11 @@ void soustraction(vector<vector<unsigned int> >& result, vector<vector<unsigned 
 	}
 }
 
+/*
+	multiplication grand nombre
+	je n'ai malheureusement pas réussi à implémenter cette opération
+	à cause d'une erreur de bit au bout du 34ème paquet
+*/
 void multiplication(vector<vector<unsigned int> >& result, vector<vector<unsigned int> >& A, vector<vector<unsigned int> >& B, unsigned int taille)
 {
 	unsigned int l;
@@ -352,7 +362,7 @@ int main()
 	vector<vector<unsigned int> > result;
 	
 	cout << "somme (185 + 75) : ";
-	addition(result, number, number2);	//Somme 85 + 170
+	addition(result, number, number2);	//Somme 85 + 170 (01010101 + 10101010)
 	for (int i = 0; i < result.size(); i++){
 		for (int j = 0; j < result[i].size(); j++)
 		{
@@ -375,6 +385,8 @@ int main()
 	}
 	cout << endl << endl;
 
+
+	//même opération que précedemment mais version BigInt
 	vector<unsigned int> package3;
 	vector<unsigned int> package4;
 
@@ -413,7 +425,7 @@ int main()
 	vector<vector<unsigned int> > result2;
 	
 	cout << "addition : " << endl;
-	addition(result2, number3, number4);	//Somme de 85 + 170
+	addition(result2, number3, number4);	//le résultat est un BigInt avec que des 1
 	for (int i = 0; i < result2.size(); i++){
 		for (int j = 0; j < result2[i].size(); j++)
 		{
@@ -445,7 +457,7 @@ int main()
 	}
 	cout << endl << endl;
 
-	cout << "addition : " << endl;
+	cout << "addition : " << endl; //on a bien la propagation de la retenue et le décalage d'un bit
 	addition(resultbis, numberbis, numberbis);
 	for (int i = 0; i < resultbis.size(); i++){
 		for (int j = 0; j < resultbis[i].size(); j++)
@@ -456,7 +468,7 @@ int main()
 	}
 	cout << endl << endl;
 	
-	cout << "soustraction : " << endl;
+	cout << "soustraction : " << endl; //on obtient bien 0 version BigInt
 	soustraction(resultbis3, numberbis, numberbis);
 	for (int i = 0; i < resultbis3.size(); i++){
 		for (int j = 0; j < resultbis3[i].size(); j++)
@@ -467,7 +479,7 @@ int main()
 	}
 	cout << endl << endl;
 	
-	cout << "multiplication : " << endl;
+	cout << "multiplication : " << endl; //problème au sein de la multiplication au bout du 34ème paquet
 	multiplication(resultbis2, numberbis, numberbis, 32);
 	for (int i = 0; i < resultbis2.size(); i++){
 		for (int j = 0; j < resultbis2[i].size(); j++)
